@@ -1,0 +1,18 @@
+/* Self-hosted latin subsets — the quiz renders identically offline, and
+   opening index.html straight from disk never waits on a font CDN. */
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: url('fonts/DMSans.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('fonts/Fraunces.woff2') format('woff2');
+}

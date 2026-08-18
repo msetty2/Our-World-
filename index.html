@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-AU" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our World — Atlas Trivia</title>
+  <meta name="description" content="A trivia game built on the Our World Atlas: capitals, countries, landmarks and more across 195 nations.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">
+  <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" fill="currentColor"/>
+  </svg>
+  <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+    <circle cx="12" cy="12" r="4.2" fill="currentColor"/>
+    <g stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <path d="M12 2.4v2.4M12 19.2v2.4M4.2 12H1.8M22.2 12h-2.4M6.5 6.5 4.8 4.8M19.2 19.2l-1.7-1.7M6.5 17.5l-1.7 1.7M19.2 4.8l-1.7 1.7"/>
+    </g>
+  </svg>
+</button>
+
+<main class="stage">
+
+  <!-- ===================== SETUP ===================== -->
+  <section class="screen setup" id="screen-setup" aria-labelledby="setup-title">
+    <header class="masthead">
+      <p class="eyebrow">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+          <circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <path d="M2.8 12h18.4M12 2.8c5 5.4 5 13 0 18.4-5-5.4-5-13 0-18.4Z" fill="none" stroke="currentColor" stroke-width="1.7"/>
+        </svg>
+        Our World Atlas
+      </p>
+      <h1 id="setup-title">How well do you<br><em>know the world?</em></h1>
+      <p class="lede">
+        Capitals, countries, landmarks and curiosities drawn from all
+        <strong>195</strong> nations in the atlas. Set your round and begin.
+      </p>
+    </header>
+
+    <div class="card setup__card">
+
+      <fieldset class="group">
+        <legend class="group__label">
+          <span class="group__num">1</span> How many questions?
+        </legend>
+        <div class="chips" id="count-chips" role="radiogroup" aria-label="Number of questions">
+          <button type="button" class="chip" role="radio" aria-checked="false" data-count="5">5</button>
+          <button type="button" class="chip" role="radio" aria-checked="true"  data-count="10">10</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-count="15">15</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-count="20">20</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-count="25">25</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend class="group__label">
+          <span class="group__num">2</span> What should we ask about?
+        </legend>
+        <div class="topics" id="topic-options" role="radiogroup" aria-label="Question topics">
+          <button type="button" class="topic" role="radio" aria-checked="false" data-topic="capitals">
+            <span class="topic__icon" aria-hidden="true">★</span>
+            <span class="topic__body">
+              <span class="topic__name">Capitals only</span>
+              <span class="topic__desc">Capital cities, the countries they belong to, and their landmarks.</span>
+            </span>
+          </button>
+          <button type="button" class="topic" role="radio" aria-checked="true" data-topic="mixed">
+            <span class="topic__icon" aria-hidden="true">◈</span>
+            <span class="topic__body">
+              <span class="topic__name">Mostly capitals <span class="topic__pill">Recommended</span></span>
+              <span class="topic__desc">A capital-heavy mix, with continents, currencies and languages folded in.</span>
+            </span>
+          </button>
+          <button type="button" class="topic" role="radio" aria-checked="false" data-topic="everything">
+            <span class="topic__icon" aria-hidden="true">◉</span>
+            <span class="topic__body">
+              <span class="topic__name">The full atlas</span>
+              <span class="topic__desc">Everything above plus population, area, landlocked nations and fun facts.</span>
+            </span>
+          </button>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend class="group__label">
+          <span class="group__num">3</span> Anywhere in particular?
+        </legend>
+        <div class="chips chips--wrap" id="region-chips" role="radiogroup" aria-label="Region">
+          <button type="button" class="chip" role="radio" aria-checked="true" data-region="all">Whole world</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-region="Africa">Africa</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-region="Asia">Asia</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-region="Europe">Europe</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-region="North America">North America</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-region="South America">South America</button>
+          <button type="button" class="chip" role="radio" aria-checked="false" data-region="Oceania">Oceania</button>
+        </div>
+        <p class="group__hint" id="region-hint"></p>
+      </fieldset>
+
+      <div class="setup__go">
+        <button type="button" class="btn btn--primary btn--lg" id="start-btn">
+          Start the quiz
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M5 12h13m-5.5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <p class="setup__best" id="setup-best" hidden></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section class="screen quiz" id="screen-quiz" hidden aria-labelledby="question-text">
+    <div class="quiz__bar">
+      <div class="quiz__meta">
+        <span class="counter"><strong id="q-current">1</strong> <span class="counter__sep">/</span> <span id="q-total">10</span></span>
+        <span class="quiz__tag" id="q-tag">Capitals</span>
+      </div>
+      <div class="score-pill">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
+          <path d="M12 2.6l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.7 6.1 20.8l1.2-6.6L2.5 9.6l6.6-.9z" fill="currentColor"/>
+        </svg>
+        <span id="score-now">0</span> correct
+      </div>
+    </div>
+
+    <div class="progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress__fill" id="progress-fill"></div>
+    </div>
+
+    <div class="card quiz__card">
+      <p class="question__kicker" id="q-kicker" hidden></p>
+      <h2 class="question" id="question-text">…</h2>
+      <blockquote class="question__quote" id="q-quote" hidden></blockquote>
+
+      <div class="options" id="options" role="group" aria-label="Answer choices"></div>
+
+      <div class="verdict" id="verdict" hidden>
+        <p class="verdict__head" id="verdict-head"></p>
+        <p class="verdict__note" id="verdict-note"></p>
+      </div>
+
+      <div class="quiz__foot">
+        <p class="hint" id="quiz-hint">Pick an answer — or press <kbd>1</kbd>–<kbd>4</kbd>.</p>
+        <button type="button" class="btn btn--primary" id="next-btn" hidden>
+          <span id="next-label">Next question</span>
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M5 12h13m-5.5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn--ghost quiz__quit" id="quit-btn">End quiz</button>
+
+    <p class="sr-only" id="live-region" aria-live="polite" role="status"></p>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section class="screen results" id="screen-results" hidden aria-labelledby="results-title">
+    <div class="card results__card">
+      <div class="results__hero">
+        <div class="ring" id="ring">
+          <svg viewBox="0 0 120 120" width="150" height="150" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#2dd4bf"/>
+                <stop offset=".55" stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#d946ef"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring__track" cx="60" cy="60" r="52" fill="none" stroke-width="10"/>
+            <circle class="ring__value" id="ring-value" cx="60" cy="60" r="52" fill="none"
+                    stroke-width="10" stroke-linecap="round"
+                    stroke-dasharray="326.7" stroke-dashoffset="326.7"
+                    transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="ring__label">
+            <span class="ring__score" id="ring-score">0/0</span>
+            <span class="ring__pct" id="ring-pct">0%</span>
+          </div>
+        </div>
+        <div class="results__words">
+          <p class="eyebrow" id="results-rank">Result</p>
+          <h2 id="results-title">Nicely done.</h2>
+          <p class="lede" id="results-blurb"></p>
+          <dl class="stats">
+            <div class="stat"><dt>Time</dt><dd id="stat-time">—</dd></div>
+            <div class="stat"><dt>Topic</dt><dd id="stat-topic">—</dd></div>
+            <div class="stat"><dt>Region</dt><dd id="stat-region">—</dd></div>
+            <div class="stat" id="stat-best-wrap"><dt>Personal best</dt><dd id="stat-best">—</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="results__actions">
+        <button type="button" class="btn btn--primary" id="again-btn">Play again — same settings</button>
+        <button type="button" class="btn btn--ghost" id="change-btn">Change settings</button>
+      </div>
+    </div>
+
+    <section class="review" aria-labelledby="review-title">
+      <h3 id="review-title" class="review__title">Your answers</h3>
+      <ol class="review__list" id="review-list"></ol>
+    </section>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <p>Built from the <strong>Our World Atlas</strong> — 195 countries, 585 landmarks.</p>
+</footer>
+
+<script src="data/atlas.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
